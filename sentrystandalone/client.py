@@ -4,7 +4,7 @@ from sentrystandalone.helpers import get_frames, send
 
 
 
-def report(sentry_url, sentry_key, exc_info, extra{}):
+def report(sentry_url, sentry_key, exc_info, extra={}):
     #view, url):
     exc_class, exception, tb = exc_info
     frames = get_frames(tb)
