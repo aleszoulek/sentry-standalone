@@ -4,7 +4,8 @@ from sentrystandalone.helpers import get_frames, send
 
 
 
-def report(sentry_url, sentry_key, exc_info, view, url):
+def report(sentry_url, sentry_key, exc_info, extra{}):
+    #view, url):
     exc_class, exception, tb = exc_info
     frames = get_frames(tb)
     data = {
@@ -20,12 +21,13 @@ def report(sentry_url, sentry_key, exc_info, view, url):
          },
         'level': 40,
         'message': unicode(exception),
-        'server_name': 'bebe',
-        'site': u'example.com',
+        'server_name': extra.get('server_name'),
+        'site': extra.get('site'),
         'traceback': traceback.format_exc(exc_info),
-        'url': url,
-        'view': view,
+        'url': extra.get('url'),
+        'view': extra.get('view'),
     }
+    data['data'].update(extra.get('data', {}))
     send(
         sentry_url,
         data,
